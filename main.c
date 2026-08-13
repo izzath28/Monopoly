@@ -32,11 +32,6 @@ int main(void) {
     int turnOrder[4] = {0, 1, 2, 3};
     determineTurnOrder(players, rolls, turnOrder);
 
-    printf("%s will begin the game.\n", players[turnOrder[0]].name);
-    printf("Turn order:\n");
-    for (i = 0; i < 4; i++) {
-        printf("%s\n", players[turnOrder[i]].name);
-    }
     
    printf("%s will begin the game.\n", players[turnOrder[0]].name);
    printf("Turn order:\n");
