@@ -188,3 +188,7 @@ int decideRepayLoan(Player *player) {
     }
     return 0;
 }
+
+int decideMortgage(Player *player) {
+    return (player->cash < 500);
+}

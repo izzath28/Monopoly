@@ -85,3 +85,30 @@ void triggerDisaster(int round, Player players[], Property properties[]) {
         printf("No insurance. %s bears the repair cost of LKR %d.\n", players[p->owner].name, repairCost);
     }
 }
+
+void triggerMarketReview(int round, Property properties[]) {
+    if (round % 10 != 0) return;
+
+    int boomGroup = rand() % 8;      /* 0-7 = the 8 color groups */
+    int declineGroup;
+    do {
+        declineGroup = rand() % 8;
+    } while (declineGroup == boomGroup);
+
+    int i;
+    for (i = 0; i < 28; i++) {
+        if (properties[i].group == boomGroup) {
+            properties[i].purchasePrice = properties[i].purchasePrice * 115 / 100;
+            properties[i].mortgageValue = properties[i].mortgageValue * 115 / 100;
+            properties[i].baseRent      = properties[i].baseRent * 125 / 100;
+        } else if (properties[i].group == declineGroup) {
+            properties[i].purchasePrice = properties[i].purchasePrice * 85 / 100;
+            properties[i].mortgageValue = properties[i].mortgageValue * 90 / 100;
+            properties[i].baseRent      = properties[i].baseRent * 80 / 100;
+        }
+    }
+
+    printf("Property Market Review\n");
+    printf("Market Boom : Group %d\n", boomGroup);
+    printf("Market Decline : Group %d\n", declineGroup);
+}

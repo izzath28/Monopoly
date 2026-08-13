@@ -21,6 +21,7 @@ int calculateNetWorth(Player *player, int playerIndex, Property properties[]) {
 }
 void payRent(Player *payer, int payerIndex, Player *owner, int ownerIndex, Property *prop, Property properties[], int diceRoll) {
     int rent;
+    if (prop->mortgaged) return;  
 
     if (prop->group == GRP_RAILWAY) {
         int owned = countGroupOwned(properties, ownerIndex, GRP_RAILWAY);
@@ -218,4 +219,21 @@ void printRoundSummary(int round, Player players[], Property properties[]) {
         printf("---------------------------------------------\n");
     }
     printf("========================================\n");
+}
+
+void mortgageProperty(Player *player, Property *prop) {
+    if (prop->owner == -1 || prop->mortgaged || prop->houses > 0) return;
+
+    prop->mortgaged = 1;
+    player->cash += prop->mortgageValue;
+    printf("%s mortgaged %s for LKR %d.\n", player->name, prop->name, prop->mortgageValue);
+}
+
+void unmortgageProperty(Player *player, Property *prop) {
+    int cost = (prop->mortgageValue * 110) / 100;  /* 10% interest to lift a mortgage, common Monopoly convention */
+    if (!prop->mortgaged || cost > player->cash) return;
+
+    prop->mortgaged = 0;
+    player->cash -= cost;
+    printf("%s paid LKR %d to lift the mortgage on %s.\n", player->name, cost, prop->name);
 }

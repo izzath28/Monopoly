@@ -68,6 +68,15 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
                 }
             }
 
+            if (decideMortgage(&players[currentPlayer])) {
+               int p;
+               for (p = 0; p < 28; p++) {
+                  if (properties[p].owner == currentPlayer && !properties[p].mortgaged && properties[p].houses == 0) {
+                     mortgageProperty(&players[currentPlayer], &properties[p]);
+                     break;
+                    }
+                }
+            }
             int buildTarget;
             if (shouldBuildHouse(&players[currentPlayer], currentPlayer, properties, &buildTarget)) {
                 buildHouse(&players[currentPlayer], &properties[buildTarget]);
@@ -85,6 +94,7 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
         triggerDisaster(round, players, properties);
 
         printRoundSummary(round, players, properties);
+        triggerMarketReview(round, properties);
 
         if (countSolventPlayers(players) <= 1) {
             break;

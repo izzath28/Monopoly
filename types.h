@@ -124,4 +124,10 @@ void triggerDisaster(int round, Player players[], Property properties[]);
 
 void printRoundSummary(int round, Player players[], Property properties[]);
 
+void mortgageProperty(Player *player, Property *prop);
+void unmortgageProperty(Player *player, Property *prop);
+int decideMortgage(Player *player); 
+
+void triggerMarketReview(int round, Property properties[]);
+
 #endif // TYPES_H
