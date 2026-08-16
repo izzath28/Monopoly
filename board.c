@@ -94,47 +94,47 @@ void inProperties(Property properties[]){
     }
     
     strcpy(properties[0].name, "Pettah");             properties[0].group = GRP_BROWN; 
-     properties[0].purchasePrice = 1500;             properties[0].baseRent = 100;     properties[0].mortgageValue = 750; properties[0].houseCost = 50; properties[0].hotelCost = 50;
+     properties[0].purchasePrice = 1500;             properties[0].baseRent = 100;     properties[0].mortgageValue = 750; properties[0].houseCost = 500; properties[0].hotelCost = 2000;
     strcpy(properties[1].name, "Maradana");           properties[1].group = GRP_BROWN; 
-     properties[1].purchasePrice = 1800;             properties[1].baseRent = 120;     properties[1].mortgageValue = 750; properties[1].houseCost = 50; properties[1].hotelCost = 50;
+     properties[1].purchasePrice = 1800;             properties[1].baseRent = 120;     properties[1].mortgageValue = 750; properties[1].houseCost = 500; properties[1].hotelCost = 2000;
     strcpy(properties[2].name, "Bambalapitiya");      properties[2].group = GRP_LIGHT_BLUE;
-     properties[2].purchasePrice = 2500;             properties[2].baseRent = 180;     properties[2].mortgageValue = 1000; properties[2].houseCost = 100; properties[2].hotelCost = 100;
+     properties[2].purchasePrice = 2500;             properties[2].baseRent = 180;     properties[2].mortgageValue = 1000; properties[2].houseCost = 750; properties[2].hotelCost = 3000;
     strcpy(properties[3].name, "Wellawatte");         properties[3].group = GRP_LIGHT_BLUE;
-     properties[3].purchasePrice = 2700;             properties[3].baseRent = 200;     properties[3].mortgageValue = 1000; properties[3].houseCost = 100; properties[3].hotelCost = 100;
+     properties[3].purchasePrice = 2700;             properties[3].baseRent = 200;     properties[3].mortgageValue = 1000; properties[3].houseCost = 750; properties[3].hotelCost = 3000;
     strcpy(properties[4].name, "Mount Lavinia");      properties[4].group = GRP_LIGHT_BLUE; 
-     properties[4].purchasePrice = 3000;             properties[4].baseRent = 220;     properties[4].mortgageValue = 1000; properties[4].houseCost = 100; properties[4].hotelCost = 100;
+     properties[4].purchasePrice = 3000;             properties[4].baseRent = 220;     properties[4].mortgageValue = 1000; properties[4].houseCost = 750; properties[4].hotelCost = 3000;
     strcpy(properties[5].name, "Nugegoda");           properties[5].group = GRP_PINK; 
-     properties[5].purchasePrice = 3500;             properties[5].baseRent = 260;     properties[5].mortgageValue = 1500; properties[5].houseCost = 150; properties[5].hotelCost = 150; 
+     properties[5].purchasePrice = 3500;             properties[5].baseRent = 260;     properties[5].mortgageValue = 1500; properties[5].houseCost = 1000; properties[5].hotelCost = 4000; 
     strcpy(properties[6].name, "Maharagama");         properties[6].group = GRP_PINK; 
-     properties[6].purchasePrice = 3800;             properties[6].baseRent = 280;     properties[6].mortgageValue = 1500; properties[6].houseCost = 150; properties[6].hotelCost = 150;
+     properties[6].purchasePrice = 3800;             properties[6].baseRent = 280;     properties[6].mortgageValue = 1500; properties[6].houseCost = 1000; properties[6].hotelCost = 4000;
     strcpy(properties[7].name, "Kottawa");            properties[7].group = GRP_PINK; 
-     properties[7].purchasePrice = 4000;             properties[7].baseRent = 300;     properties[7].mortgageValue = 1500; properties[7].houseCost = 150; properties[7].hotelCost = 150;
+     properties[7].purchasePrice = 4000;             properties[7].baseRent = 300;     properties[7].mortgageValue = 1500; properties[7].houseCost = 1000; properties[7].hotelCost = 4000;
     strcpy(properties[8].name, "Negambo");            properties[8].group = GRP_ORANGE;
-     properties[8].purchasePrice = 4500;             properties[8].baseRent = 350;     properties[8].mortgageValue = 2000; properties[8].houseCost = 200; properties[8].hotelCost = 200; 
+     properties[8].purchasePrice = 4500;             properties[8].baseRent = 350;     properties[8].mortgageValue = 2000; properties[8].houseCost = 1250; properties[8].hotelCost = 5000; 
     strcpy(properties[9].name, "Katunayake");         properties[9].group = GRP_ORANGE;
-     properties[9].purchasePrice = 4700;             properties[9].baseRent = 370;     properties[9].mortgageValue = 2000; properties[9].houseCost = 200; properties[9].hotelCost = 200;
+     properties[9].purchasePrice = 4700;             properties[9].baseRent = 370;     properties[9].mortgageValue = 2000; properties[9].houseCost = 1250; properties[9].hotelCost = 5000;
     strcpy(properties[10].name, "Ja-Ela");            properties[10].group = GRP_ORANGE; 
-     properties[10].purchasePrice = 5000;            properties[10].baseRent = 400;    properties[10].mortgageValue = 2000; properties[10].houseCost = 200; properties[10].hotelCost = 200; 
+     properties[10].purchasePrice = 5000;            properties[10].baseRent = 400;    properties[10].mortgageValue = 2000; properties[10].houseCost = 1250; properties[10].hotelCost = 5000; 
     strcpy(properties[11].name, "Kandy City");        properties[11].group = GRP_RED; 
-     properties[11].purchasePrice = 5500;            properties[11].baseRent = 450;    properties[11].mortgageValue = 2500; properties[11].houseCost = 250; properties[11].hotelCost = 250;
+     properties[11].purchasePrice = 5500;            properties[11].baseRent = 450;    properties[11].mortgageValue = 2500; properties[11].houseCost = 1500; properties[11].hotelCost = 6000;
     strcpy(properties[12].name, "Peradeniya");        properties[12].group = GRP_RED; 
-     properties[12].purchasePrice = 5800;            properties[12].baseRent = 480;    properties[12].mortgageValue = 2500; properties[12].houseCost = 250; properties[12].hotelCost = 250;
+     properties[12].purchasePrice = 5800;            properties[12].baseRent = 480;    properties[12].mortgageValue = 2500; properties[12].houseCost = 1500; properties[12].hotelCost = 6000;
     strcpy(properties[13].name, "Katugastota");       properties[13].group = GRP_RED; 
-     properties[13].purchasePrice = 6000;            properties[13].baseRent = 500;    properties[13].mortgageValue = 2500; properties[13].houseCost = 250; properties[13].hotelCost = 250;
+     properties[13].purchasePrice = 6000;            properties[13].baseRent = 500;    properties[13].mortgageValue = 2500; properties[13].houseCost = 1500; properties[13].hotelCost = 6000;
     strcpy(properties[14].name, "Galle Fort");        properties[14].group = GRP_YELLOW;
-     properties[14].purchasePrice = 6500;            properties[14].baseRent = 600;    properties[14].mortgageValue = 3000; properties[14].houseCost = 300; properties[14].hotelCost = 300;
+     properties[14].purchasePrice = 6500;            properties[14].baseRent = 600;    properties[14].mortgageValue = 3000; properties[14].houseCost = 2000; properties[14].hotelCost = 8000;
     strcpy(properties[15].name, "Unawatuna");         properties[15].group = GRP_YELLOW;
-     properties[15].purchasePrice = 6800;            properties[15].baseRent = 620;    properties[15].mortgageValue = 3000; properties[15].houseCost = 300; properties[15].hotelCost = 300;
+     properties[15].purchasePrice = 6800;            properties[15].baseRent = 620;    properties[15].mortgageValue = 3000; properties[15].houseCost = 2000; properties[15].hotelCost = 8000;
     strcpy(properties[16].name, "Hikkaduwa");         properties[16].group = GRP_YELLOW; 
-     properties[16].purchasePrice = 7000;            properties[16].baseRent = 650;    properties[16].mortgageValue = 3000; properties[16].houseCost = 300; properties[16].hotelCost = 300;
+     properties[16].purchasePrice = 7000;            properties[16].baseRent = 650;    properties[16].mortgageValue = 3000; properties[16].houseCost = 2000; properties[16].hotelCost = 8000;
     strcpy(properties[17].name, "Jaffna Town");       properties[17].group = GRP_GREEN;  
-     properties[17].purchasePrice = 8000;            properties[17].baseRent = 750;    properties[17].mortgageValue = 3500; properties[17].houseCost = 350; properties[17].hotelCost = 350;
+     properties[17].purchasePrice = 8000;            properties[17].baseRent = 750;    properties[17].mortgageValue = 3500; properties[17].houseCost = 2500; properties[17].hotelCost = 10000;
     strcpy(properties[18].name, "Nallur");            properties[18].group = GRP_GREEN;
-     properties[18].purchasePrice = 8300;            properties[18].baseRent = 780;    properties[18].mortgageValue = 3500; properties[18].houseCost = 350; properties[18].hotelCost = 350;
+     properties[18].purchasePrice = 8300;            properties[18].baseRent = 780;    properties[18].mortgageValue = 3500; properties[18].houseCost = 2500; properties[18].hotelCost = 10000;
     strcpy(properties[19].name, "Trincomalee");       properties[19].group = GRP_GREEN; 
-     properties[19].purchasePrice = 8500;            properties[19].baseRent = 800;    properties[19].mortgageValue = 3500; properties[19].houseCost = 350; properties[19].hotelCost = 350; 
+     properties[19].purchasePrice = 8500;            properties[19].baseRent = 800;    properties[19].mortgageValue = 3500; properties[19].houseCost = 2500; properties[19].hotelCost = 10000; 
     strcpy(properties[20].name, "Nuwara Eliya");      properties[20].group = GRP_DARK_BLUE;
-      properties[20].purchasePrice = 10000;           properties[20].baseRent = 1000;   properties[20].mortgageValue = 4000; properties[20].houseCost = 400; properties[20].hotelCost = 400;
+      properties[20].purchasePrice = 10000;           properties[20].baseRent = 1000;   properties[20].mortgageValue = 4000; properties[20].houseCost = 3000; properties[20].hotelCost = 12000;
     strcpy(properties[21].name, "Galle Face");        properties[21].group = GRP_DARK_BLUE; 
      properties[21].purchasePrice = 12000;           properties[21].baseRent = 1200;   properties[21].mortgageValue = 5000; properties[21].houseCost = 3000; properties[21].hotelCost = 12000;
     strcpy(properties[22].name, "Colombo Fort Railway Station"); properties[22].group = GRP_RAILWAY; 
@@ -171,3 +171,26 @@ void movePlayer(Player *player, int steps){
     printf("Current Balance : LKR %d.\n", player->cash);
     }
 }   
+
+const char *groupName(PropertyGroup g) {
+    switch (g) {
+        case GRP_BROWN:     
+           return "Brown";
+        case GRP_LIGHT_BLUE: 
+           return "Light Blue";
+        case GRP_PINK:     
+           return "Pink";
+        case GRP_ORANGE:  
+           return "Orange";
+        case GRP_RED:     
+           return "Red";
+        case GRP_YELLOW:  
+           return "Yellow";
+        case GRP_GREEN:    
+          return "Green";
+        case GRP_DARK_BLUE:
+          return "Dark Blue";
+        default:           
+          return "Unknown";
+    }
+}

@@ -23,6 +23,9 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
     int activeEconomicEvent = -1;
     int economicEventRoundsLeft = 0;
     int activeRegulation = -1;
+    int marketBoomRoundsLeft = 0;
+    int marketDeclineRoundsLeft = 0;
+    int currentInflationRate = 0;
 
     for (round = 1; round <= 500; round++) {
         for (i = 0; i < 4; i++) {
@@ -49,6 +52,9 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
             printf("%s rolled %d.\n", players[currentPlayer].name, diceRoll);
             movePlayer(&players[currentPlayer], diceRoll);
 
+            int landedSquare = players[currentPlayer].position;
+            printf("%s landed on %s.\n", players[currentPlayer].name, board[landedSquare].name);
+
             if (players[currentPlayer].position == 30) {
                 players[currentPlayer].inJail = 1;
                 players[currentPlayer].jailTurns = 0;
@@ -57,7 +63,7 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
                 continue;
             }
 
-            int landedSquare = players[currentPlayer].position;
+            
             if (board[landedSquare].propertyindex != -1) {
                 int propIdx = board[landedSquare].propertyindex;
                 Property *prop = &properties[propIdx];
@@ -112,26 +118,41 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
               if (labourStrikeRounds == 0 && shouldBuildHouse(&players[currentPlayer], currentPlayer, properties, &buildTarget)) {
                    buildHouse(&players[currentPlayer], &properties[buildTarget]);
                 }
+
+            printf("\n");
+            printf("------------------------------------------------");
+            printf("\n");
             }
         
-
+            
        //round checkups
         accrueInterest(players);
         checkLoanDefault(players, properties);
 
         applyDepreciation(properties);
         applyBuildingDecay(properties);
-        triggerInflation(round, properties);
+       triggerInflation(round, properties, &currentInflationRate);
         triggerEconomicEvent(round, properties, &activeEconomicEvent, &economicEventRoundsLeft);
         triggerGovernmentRegulation(round, properties, players, &activeRegulation);
         triggerDisaster(round, players, properties);
 
         
         reviewPropertyMarket(round, properties, &currentBoomGroup, &currentDeclineGroup, groupLastAffected);
+            if (round % 10 == 0) { marketBoomRoundsLeft = 10; marketDeclineRoundsLeft = 10; }
+               else { if (marketBoomRoundsLeft > 0) marketBoomRoundsLeft--; 
+                      if (marketDeclineRoundsLeft > 0) marketDeclineRoundsLeft--; }
+
         drawRegionalCard(round, &activeRegionalCard, &regionalCardRoundsLeft);
         recalculatePropertyValues(properties, currentBoomGroup, currentDeclineGroup, activeRegionalCard);
 
         printRoundSummary(round, players, properties);
+
+        int currentLoanInterest = 8;  /* base rate; +/- from active event/regulation, see note below */
+        if (activeEconomicEvent == 3) currentLoanInterest = currentLoanInterest * 115 / 100;
+        else if (activeEconomicEvent == 4) currentLoanInterest = currentLoanInterest * 90 / 100;
+        if (activeRegulation == 1) currentLoanInterest -= 2;
+
+        printMarketConditions(currentBoomGroup, marketBoomRoundsLeft, currentDeclineGroup, marketDeclineRoundsLeft, activeRegionalCard, regionalCardRoundsLeft, currentInflationRate, currentLoanInterest);
 
         decrementEventTimers(players, properties, &powerFailureRounds, &labourStrikeRounds);
 

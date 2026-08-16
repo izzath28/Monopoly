@@ -21,8 +21,9 @@ int main(void) {
         printf("Player %d : %s\n", i + 1, players[i].name);
     }
     printf("Each player begins with LKR %d.\n", players[0].cash);
+    printf("\n");
 
-    printf("Determining the first player\n");
+    printf("Determining the first player\n\n");
     int rolls[4];
     for (i = 0; i < 4; i++) {
         rolls[i] = rollDice() + rollDice();
@@ -32,12 +33,18 @@ int main(void) {
     int turnOrder[4] = {0, 1, 2, 3};
     determineTurnOrder(players, rolls, turnOrder);
 
-    
+   printf("\n");
    printf("%s will begin the game.\n", players[turnOrder[0]].name);
+   printf("\n");
+   printf("------------------------------------------------");
+   printf("\n");
    printf("Turn order:\n");
    for (i = 0; i < 4; i++) {
     printf("%s\n", players[turnOrder[i]].name);
    }
+    printf("\n");
+    printf("------------------------------------------------");
+    printf("\n");
 
    runGame(board, properties, players, turnOrder);
 

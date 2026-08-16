@@ -77,7 +77,7 @@ void payRent(Player *payer, int payerIndex, Player *owner, int ownerIndex, Prope
 
     payer->cash -= rent;
     owner->cash += rent;
-    printf("%s landed on %s.\n", payer->name, prop->name);
+    
     printf("Rent Paid : LKR %d.\n", rent);
     printf("Owner : %s.\n", owner->name);
 
@@ -357,4 +357,45 @@ void renovateDamagedBuilding(Player *player, Property *prop) {
     prop->buildingCondition = 100;
     prop->roundsSinceMaintenance = 0;
     printf("%s renovated %s, repairing structural damage. Cost : LKR %d.\n", player->name, prop->name, cost);
+}
+
+void printMarketConditions(int boomGroup, int boomRoundsLeft, int declineGroup, int declineRoundsLeft,
+                            int regionalCardIdx, int regionalCardRoundsLeft,
+                            int currentInflationRate, int currentLoanInterestRate) {
+    printf("====================================\n");
+    printf("Current Market Conditions\n");
+    printf("=========================================\n\n");
+
+    printf("Market Boom\n-------------\n");
+    if (boomGroup != -1) {
+        printf("%s (+20%%)\n", groupName((PropertyGroup)boomGroup));
+        printf("Rounds Remaining : %d\n\n", boomRoundsLeft);
+    } else {
+        printf("None\n\n");
+    }
+
+    printf("Market Decline\n----------------\n");
+    if (declineGroup != -1) {
+        printf("%s (-15%%)\n", groupName((PropertyGroup)declineGroup));
+        printf("Rounds Remaining : %d\n\n", declineRoundsLeft);
+    } else {
+        printf("None\n\n");
+    }
+
+    printf("Regional Development\n-----------------------\n");
+    if (regionalCardIdx != -1) {
+        const char *name; int propList[4], vp, rp;
+        getRegionalCardData(regionalCardIdx, &name, propList, &vp, &rp);
+        printf("%s\n", name);
+        printf("Rounds Remaining : %d\n\n", regionalCardRoundsLeft);
+    } else {
+        printf("None\n\n");
+    }
+
+    printf("Inflation\n------------\n");
+    printf("%+d%%\n\n", currentInflationRate);
+
+    printf("Current Loan Interest\n-----------------------\n");
+    printf("%d%%\n", currentLoanInterestRate);
+    printf("====================================\n");
 }

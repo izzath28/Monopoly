@@ -14,7 +14,7 @@ typedef enum {
 } SquareType;
 
 typedef struct {
-    char name[40];
+    char name[50];
     SquareType type;
     int propertyindex; //so that can treat non-properties differently. If -1 then it's a non-property square.
 } Square;
@@ -33,7 +33,7 @@ typedef enum{
 } PropertyGroup;
 
 typedef struct{
-    char name[40];
+    char name[50];
     PropertyGroup group;
     int purchasePrice;
     int mortgageValue;
@@ -134,7 +134,7 @@ int decideMaintenance(Player *player, Property *prop);
 int decideRenovateDamage(Player *player, Property *prop);
 
 void applyDepreciation(Property properties[]);
-void triggerInflation(int round, Property properties[]);
+void triggerInflation(int round, Property properties[], int *currentInflationRate);
 void triggerEconomicEvent(int round, Property properties[], int *activeEconomicEvent, int *economicEventRoundsLeft);
 void triggerGovernmentRegulation(int round, Property properties[], Player players[], int *activeRegulation);
 void triggerDisaster(int round, Player players[], Property properties[]);
@@ -157,5 +157,8 @@ void recalculatePropertyValues(Property properties[], int boomGroup, int decline
 
 void drawNationalEventCard(int currentPlayer, Player players[], Property properties[], int *powerFailureRounds, int *labourStrikeRounds);
 void decrementEventTimers(Player players[], Property properties[], int *powerFailureRounds, int *labourStrikeRounds);
+
+const char *groupName(PropertyGroup g);
+void printMarketConditions(int boomGroup, int boomRoundsLeft, int declineGroup, int declineRoundsLeft, int regionalCardIdx, int regionalCardRoundsLeft, int currentInflationRate, int currentLoanInterestRate);
 
 #endif // TYPES_H

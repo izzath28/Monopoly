@@ -13,11 +13,12 @@ void applyDepreciation(Property properties[]) {
     }
 }
 
-void triggerInflation(int round, Property properties[]) {
+void triggerInflation(int round, Property properties[], int *currentInflationRate) {
     if (round % 10 != 0) return;
 
     int rates[6] = {-3, 0, 2, 5, 8, 12};
     int rate = rates[rand() % 6];
+    *currentInflationRate = rate;
     int i;
 
     for (i = 0; i < 28; i++) {
@@ -206,13 +207,14 @@ void recalculatePropertyValues(Property properties[], int boomGroup, int decline
             properties[i].mortgageValue = properties[i].mortgageValue * 90 / 100;
             properties[i].baseRent      = properties[i].baseRent * 80 / 100;
         }
+    
+
+        if (properties[i].structuralDamage) {
+             properties[i].purchasePrice = properties[i].purchasePrice * 85 / 100;
+             properties[i].baseRent      = properties[i].baseRent * 75 / 100;
+            }
     }
-
-    if (properties[i].structuralDamage) {
-         properties[i].purchasePrice = properties[i].purchasePrice * 85 / 100;
-         properties[i].baseRent      = properties[i].baseRent * 75 / 100;
-        }
-
+    
     if (activeRegionalCard != -1) {
         const char *name;
         int propList[4], valuePercent, rentPercent, k;
