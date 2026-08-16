@@ -47,6 +47,14 @@ typedef struct{
     int insuranceRoundsLeft;
     int houses;      //5th house will be the hotel
     int age;
+    int permPurchasePrice;
+    int permBaseRent;
+    int permMortgageValue;
+    int closedRoundsLeft;  // Political Rally: 0 = open, >0 = collecting no rent
+    int buildingCondition;
+    int roundsSinceMaintenance;
+    int structuralDamage;
+    int maintenanceSurchargePercent;
 } Property;
 
 void inBoard(Square board[]);
@@ -70,10 +78,12 @@ typedef struct{
     int jailTurns;
     int hasLoan;
     int loanAmount;
-    int loanInterestRate;   /* per-mille, e.g. 80 = 8.0% */
+    int loanInterestRate;   //per-mille, e.g. 80 = 8.0% 
     int loanRoundsLeft;
     int collateral[28];
     int numCollateral;
+    int eventCard;         // -1 = none, else 0-19 
+int eventCardRounds;
 } Player;
 
 void inPlayers(Player players[]);
@@ -87,10 +97,14 @@ void determineTurnOrder(Player players[], int rolls[], int turnOrder[]); //playi
 void movePlayer(Player *player, int steps);
 
 //finance.c
-void purchaseProperty(Player *player, int playerIndex, Property *prop);
+void purchaseProperty(Player *player, int playerIndex, Property *prop, Property properties[], int activeRegulation);
 int calculateNetWorth(Player *player, int playerIndex, Property properties[]);
 int countGroupOwned(Property properties[], int ownerIndex, PropertyGroup group);
-void payRent(Player *payer, int payerIndex, Player *owner, int ownerIndex, Property *prop, Property properties[], int diceRoll);
+void payRent(Player *payer, int payerIndex, Player *owner, int ownerIndex, Property *prop, Property properties[], int diceRoll, Player players[], int powerFailureActive, int activeEconomicEvent, int activeRegulation);
+void payIncomeTax(Player *player, int playerIndex, Property properties[], int activeRegulation);
+
+void releasePlayerAssets(Player *player, int playerIndex, Property properties[]);
+
 
 int hasMonopoly(Property properties[], int ownerIndex, PropertyGroup group);
 void buildHouse(Player *player, Property *prop);
@@ -108,26 +122,40 @@ void auctionProperty(Player players[], Property *prop);
 int resolveJail(Player *player);
 
 int maxLoanAmount(Player *player, int playerIndex, Property properties[]);
-void takeLoan(Player *player, int playerIndex, Property properties[]);
+void takeLoan(Player *player, int playerIndex, Property properties[], int activeEconomicEvent, int activeRegulation);
 void repayLoan(Player *player);
 void accrueInterest(Player players[]);
 void checkLoanDefault(Player players[], Property properties[]);
-void purchaseInsurance(Player *player, Property *prop, int type);
+void purchaseInsurance(Player *player, Property *prop, int type, int activeEconomicEvent, int activeRegulation);
 int decideTakeLoan(Player *player);
 int decideRepayLoan(Player *player);
 
+int decideMaintenance(Player *player, Property *prop);
+int decideRenovateDamage(Player *player, Property *prop);
+
 void applyDepreciation(Property properties[]);
 void triggerInflation(int round, Property properties[]);
-void triggerEconomicEvent(int round);
-void triggerGovernmentRegulation(int round);
+void triggerEconomicEvent(int round, Property properties[], int *activeEconomicEvent, int *economicEventRoundsLeft);
+void triggerGovernmentRegulation(int round, Property properties[], Player players[], int *activeRegulation);
 void triggerDisaster(int round, Player players[], Property properties[]);
+
+void applyBuildingDecay(Property properties[]);
+void performMaintenance(Player *player, Property *prop);
+void renovateDamagedBuilding(Player *player, Property *prop);
 
 void printRoundSummary(int round, Player players[], Property properties[]);
 
 void mortgageProperty(Player *player, Property *prop);
-void unmortgageProperty(Player *player, Property *prop);
 int decideMortgage(Player *player); 
 
-void triggerMarketReview(int round, Property properties[]);
+
+//events.c
+void reviewPropertyMarket(int round, Property properties[], int *boomGroup, int *declineGroup, int groupLastAffected[]);
+void getRegionalCardData(int cardIdx, const char **name, int propList[4], int *valuePercent, int *rentPercent);
+void drawRegionalCard(int round, int *activeCard, int *cardRoundsLeft);
+void recalculatePropertyValues(Property properties[], int boomGroup, int declineGroup, int activeRegionalCard);
+
+void drawNationalEventCard(int currentPlayer, Player players[], Property properties[], int *powerFailureRounds, int *labourStrikeRounds);
+void decrementEventTimers(Player players[], Property properties[], int *powerFailureRounds, int *labourStrikeRounds);
 
 #endif // TYPES_H

@@ -14,6 +14,8 @@ void inPlayers(Player players[]){
     players[0].hasLoan = 0;  
     players[0].loanAmount = 0;  
     players[0].numCollateral = 0;
+    players[0].eventCard = -1;  
+    players[0].eventCardRounds = 0;
 
    strcpy(players[1].name, "Conservative Banker");
     players[1].strategy = STRAT_CONSERVATIVE_BANKER;
@@ -25,6 +27,8 @@ void inPlayers(Player players[]){
     players[1].hasLoan = 0;  
     players[1].loanAmount = 0;  
     players[1].numCollateral = 0;
+    players[1].eventCard = -1;  
+    players[1].eventCardRounds = 0;
 
    strcpy(players[2].name, "Risk Taker");
     players[2].strategy = STRAT_RISK_TAKER;
@@ -36,6 +40,8 @@ void inPlayers(Player players[]){
     players[2].hasLoan = 0;  
     players[2].loanAmount = 0;  
     players[2].numCollateral = 0;
+    players[2].eventCard = -1; 
+    players[2].eventCardRounds = 0;
 
    strcpy(players[3].name, "Opportunistic Trader");
     players[3].strategy = STRAT_OPPORTUNISTIC_TRADER;
@@ -47,6 +53,8 @@ void inPlayers(Player players[]){
     players[3].hasLoan = 0;  
     players[3].loanAmount = 0;  
     players[3].numCollateral = 0;
+    players[3].eventCard = -1;  
+    players[3].eventCardRounds = 0;
 }
 
 int rollDice(void) {
@@ -191,4 +199,14 @@ int decideRepayLoan(Player *player) {
 
 int decideMortgage(Player *player) {
     return (player->cash < 500);
+}
+
+int decideMaintenance(Player *player, Property *prop) {
+    (void)player;
+    return (prop->houses > 0 && prop->buildingCondition < 90);
+}
+
+int decideRenovateDamage(Player *player, Property *prop) {
+    (void)player;
+    return prop->structuralDamage;
 }

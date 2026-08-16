@@ -86,6 +86,11 @@ void inProperties(Property properties[]){
         properties[i].insuranceRoundsLeft = 0;
         properties[i].houses = 0; //No houses initially
         properties[i].age = 0;
+        properties[i].closedRoundsLeft = 0;
+        properties[i].buildingCondition = 100;
+        properties[i].roundsSinceMaintenance = 0;
+        properties[i].structuralDamage = 0;
+        properties[i].maintenanceSurchargePercent = 0;
     }
     
     strcpy(properties[0].name, "Pettah");             properties[0].group = GRP_BROWN; 
@@ -133,18 +138,23 @@ void inProperties(Property properties[]){
     strcpy(properties[21].name, "Galle Face");        properties[21].group = GRP_DARK_BLUE; 
      properties[21].purchasePrice = 12000;           properties[21].baseRent = 1200;   properties[21].mortgageValue = 5000; properties[21].houseCost = 3000; properties[21].hotelCost = 12000;
     strcpy(properties[22].name, "Colombo Fort Railway Station"); properties[22].group = GRP_RAILWAY; 
-     properties[22].purchasePrice = 2000;            properties[22].baseRent = 250;    properties[22].mortgageValue = 2000; properties[22].houseCost = 0; properties[22].hotelCost = 0;
+     properties[22].purchasePrice = 1500;            properties[22].baseRent = 250;    properties[22].mortgageValue = 1000; properties[22].houseCost = 0; properties[22].hotelCost = 0;
     strcpy(properties[23].name, "Kandy Railway Station"); properties[23].group = GRP_RAILWAY;
-     properties[23].purchasePrice = 2000;            properties[23].baseRent = 250;    properties[23].mortgageValue = 2000; properties[23].houseCost = 0; properties[23].hotelCost = 0;
+     properties[23].purchasePrice = 1500;            properties[23].baseRent = 250;    properties[23].mortgageValue = 1000; properties[23].houseCost = 0; properties[23].hotelCost = 0;
     strcpy(properties[24].name, "Galle Railway Station"); properties[24].group = GRP_RAILWAY; 
-     properties[24].purchasePrice = 2000;            properties[24].baseRent = 250;    properties[24].mortgageValue = 2000; properties[24].houseCost = 0; properties[24].hotelCost = 0;
+     properties[24].purchasePrice = 1500;            properties[24].baseRent = 250;    properties[24].mortgageValue = 1000; properties[24].houseCost = 0; properties[24].hotelCost = 0;
     strcpy(properties[25].name, "Jaffna Railway Station"); properties[25].group = GRP_RAILWAY; 
-     properties[25].purchasePrice = 2000;            properties[25].baseRent = 250;    properties[25].mortgageValue = 2000; properties[25].houseCost = 0; properties[25].hotelCost = 0;
+     properties[25].purchasePrice = 1500;            properties[25].baseRent = 250;    properties[25].mortgageValue = 1000; properties[25].houseCost = 0; properties[25].hotelCost = 0;
     strcpy(properties[26].name, "Ceylon Electricity Board"); properties[26].group = GRP_UTILITY; 
      properties[26].purchasePrice = 1500;            properties[26].baseRent = 0;      properties[26].mortgageValue = 1500; properties[26].houseCost = 0; properties[26].hotelCost = 0;
     strcpy(properties[27].name, "National Water Supply and Drainage Board"); properties[27].group = GRP_UTILITY;
      properties[27].purchasePrice = 1500;            properties[27].baseRent = 0;      properties[27].mortgageValue = 750; properties[27].houseCost = 0; properties[27].hotelCost = 0;
 
+     for (i = 0; i < 28; i++) {
+         properties[i].permPurchasePrice = properties[i].purchasePrice;
+         properties[i].permBaseRent = properties[i].baseRent;
+         properties[i].permMortgageValue = properties[i].mortgageValue;
+        }
 }
 
 void movePlayer(Player *player, int steps){

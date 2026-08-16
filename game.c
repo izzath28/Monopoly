@@ -13,6 +13,16 @@ int countSolventPlayers(Player players[]) {
 void runGame(Square board[], Property properties[], Player players[], int turnOrder[]) {
     int round;
     int i;
+    int currentBoomGroup = -1;
+    int currentDeclineGroup = -1;
+    int groupLastAffected[8] = {-100, -100, -100, -100, -100, -100, -100, -100};
+    int activeRegionalCard = -1;
+    int regionalCardRoundsLeft = 0;
+    int powerFailureRounds = 0;
+    int labourStrikeRounds = 0;
+    int activeEconomicEvent = -1;
+    int economicEventRoundsLeft = 0;
+    int activeRegulation = -1;
 
     for (round = 1; round <= 500; round++) {
         for (i = 0; i < 4; i++) {
@@ -21,6 +31,19 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
             if (players[currentPlayer].bankrupt) continue;
 
             if (resolveJail(&players[currentPlayer])) continue;
+
+            {
+             int p;
+             for (p = 0; p < 28; p++) {
+                 if (properties[p].owner == currentPlayer) {
+                      if (decideRenovateDamage(&players[currentPlayer], &properties[p])) {
+                         renovateDamagedBuilding(&players[currentPlayer], &properties[p]);
+                        } else if (decideMaintenance(&players[currentPlayer], &properties[p])) {
+                               performMaintenance(&players[currentPlayer], &properties[p]);
+                            }
+                    }
+                }
+            }
 
             int diceRoll = rollDice() + rollDice();
             printf("%s rolled %d.\n", players[currentPlayer].name, diceRoll);
@@ -40,29 +63,37 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
                 Property *prop = &properties[propIdx];
 
                 if (prop->owner == -1) {
-                    if (shouldBuyProperty(&players[currentPlayer], prop)) {
-                        purchaseProperty(&players[currentPlayer], currentPlayer, prop);
-                    } else {
-                        auctionProperty(players, prop);
-                    }
+                     if (shouldBuyProperty(&players[currentPlayer], prop)) {
+                           purchaseProperty(&players[currentPlayer], currentPlayer, prop, properties, activeRegulation);
+                        } else {
+                              auctionProperty(players, prop);
+                            }
                 } else if (prop->owner != currentPlayer) {
-                    payRent(&players[currentPlayer], currentPlayer, &players[prop->owner], prop->owner, prop, properties, diceRoll);
+                          payRent(&players[currentPlayer], currentPlayer, &players[prop->owner], prop->owner, prop, properties, diceRoll, players, powerFailureRounds > 0, activeEconomicEvent, activeRegulation);
+                        }
                 }
-            }
 
-            if (landedSquare == 38) {  /* Bank of Ceylon */
+                if (landedSquare == 2 || landedSquare == 7 || landedSquare == 22 || landedSquare == 36) {
+                     drawNationalEventCard(currentPlayer, players, properties, &powerFailureRounds, &labourStrikeRounds);
+                    }
+            
+              if (landedSquare == 38) {  /* Bank of Ceylon */
                 if (decideRepayLoan(&players[currentPlayer])) {
                     repayLoan(&players[currentPlayer]);
                 } else if (decideTakeLoan(&players[currentPlayer])) {
-                    takeLoan(&players[currentPlayer], currentPlayer, properties);
+                   takeLoan(&players[currentPlayer], currentPlayer, properties, activeEconomicEvent, activeRegulation);
                 }
-            }
+                }
 
-            if (landedSquare == 17 || landedSquare == 33) {  /* Insurance squares */
+               if (landedSquare == 4) {
+                 payIncomeTax(&players[currentPlayer], currentPlayer, properties, activeRegulation);
+                }
+
+                if (landedSquare == 17 || landedSquare == 33) {  /* Insurance squares */
                 int p;
                 for (p = 0; p < 28; p++) {
                     if (properties[p].owner == currentPlayer && !properties[p].insured) {
-                        purchaseInsurance(&players[currentPlayer], &properties[p], 0);
+                        purchaseInsurance(&players[currentPlayer], &properties[p], 0, activeEconomicEvent, activeRegulation);
                         break;
                     }
                 }
@@ -77,24 +108,32 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
                     }
                 }
             }
-            int buildTarget;
-            if (shouldBuildHouse(&players[currentPlayer], currentPlayer, properties, &buildTarget)) {
-                buildHouse(&players[currentPlayer], &properties[buildTarget]);
+           int buildTarget;
+              if (labourStrikeRounds == 0 && shouldBuildHouse(&players[currentPlayer], currentPlayer, properties, &buildTarget)) {
+                   buildHouse(&players[currentPlayer], &properties[buildTarget]);
+                }
             }
-        }
+        
 
        //round checkups
         accrueInterest(players);
         checkLoanDefault(players, properties);
 
         applyDepreciation(properties);
+        applyBuildingDecay(properties);
         triggerInflation(round, properties);
-        triggerEconomicEvent(round);
-        triggerGovernmentRegulation(round);
+        triggerEconomicEvent(round, properties, &activeEconomicEvent, &economicEventRoundsLeft);
+        triggerGovernmentRegulation(round, properties, players, &activeRegulation);
         triggerDisaster(round, players, properties);
 
+        
+        reviewPropertyMarket(round, properties, &currentBoomGroup, &currentDeclineGroup, groupLastAffected);
+        drawRegionalCard(round, &activeRegionalCard, &regionalCardRoundsLeft);
+        recalculatePropertyValues(properties, currentBoomGroup, currentDeclineGroup, activeRegionalCard);
+
         printRoundSummary(round, players, properties);
-        triggerMarketReview(round, properties);
+
+        decrementEventTimers(players, properties, &powerFailureRounds, &labourStrikeRounds);
 
         if (countSolventPlayers(players) <= 1) {
             break;
@@ -102,7 +141,7 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
     }
 
     printf("========================================\n");
-    printf("===== GAME OVER\n");
+    printf("===== GAME OVER=====\n");
 
     int bestNetWorth = -999999;
     int winnerIndex = -1;
