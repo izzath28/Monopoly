@@ -91,7 +91,7 @@ void payRent(Player *payer, int payerIndex, Player *owner, int ownerIndex, Prope
 void payIncomeTax(Player *player, int playerIndex, Property properties[], int activeRegulation) {
     int assets = calculateNetWorth(player, playerIndex, properties);
     int tax = (assets * 15) / 100;
-    if (activeRegulation == 0) tax = tax * 150 / 100;  /* Increase Property Tax regulation */
+    if (activeRegulation == 0) tax = tax * 150 / 100;  // Increase Property Tax regulation 
 
     player->cash -= tax;
     printf("%s landed on Income Tax.\n", player->name);

@@ -83,7 +83,7 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
                      drawNationalEventCard(currentPlayer, players, properties, &powerFailureRounds, &labourStrikeRounds);
                     }
             
-              if (landedSquare == 38) {  /* Bank of Ceylon */
+              if (landedSquare == 38) {  // Bank of Ceylon 
                 if (decideRepayLoan(&players[currentPlayer])) {
                     repayLoan(&players[currentPlayer]);
                 } else if (decideTakeLoan(&players[currentPlayer])) {
@@ -95,7 +95,7 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
                  payIncomeTax(&players[currentPlayer], currentPlayer, properties, activeRegulation);
                 }
 
-                if (landedSquare == 17 || landedSquare == 33) {  /* Insurance squares */
+                if (landedSquare == 17 || landedSquare == 33) {  // Insurance squares
                 int p;
                 for (p = 0; p < 28; p++) {
                     if (properties[p].owner == currentPlayer && !properties[p].insured) {
@@ -147,7 +147,7 @@ void runGame(Square board[], Property properties[], Player players[], int turnOr
 
         printRoundSummary(round, players, properties);
 
-        int currentLoanInterest = 8;  /* base rate; +/- from active event/regulation, see note below */
+        int currentLoanInterest = 8;  // base rate
         if (activeEconomicEvent == 3) currentLoanInterest = currentLoanInterest * 115 / 100;
         else if (activeEconomicEvent == 4) currentLoanInterest = currentLoanInterest * 90 / 100;
         if (activeRegulation == 1) currentLoanInterest -= 2;

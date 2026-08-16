@@ -105,24 +105,20 @@ void determineTurnOrder(Player players[], int rolls[], int turnOrder[]) {
 
 int shouldBuyProperty(Player *player, Property *prop) {
     if (player->cash < prop->purchasePrice) {
-        return 0;   /* can't afford it, no matter the strategy */
+        return 0;   
     }
 
     switch (player->strategy) {
         case STRAT_AGGRESSIVE_INVESTOR:
-            /* buys as long as at least one future rent payment remains affordable */
             return (player->cash - prop->purchasePrice) >= prop->baseRent;
 
         case STRAT_CONSERVATIVE_BANKER:
-            /* only if at least 50% of current cash remains afterward */
             return (player->cash - prop->purchasePrice) >= (player->cash / 2);
 
         case STRAT_RISK_TAKER:
-            /* buys everything it can possibly afford */
             return 1;
 
         case STRAT_OPPORTUNISTIC_TRADER:
-            /* only if it leaves a reasonable cash cushion */
             return (player->cash - prop->purchasePrice) >= (player->cash / 3);
     }
 

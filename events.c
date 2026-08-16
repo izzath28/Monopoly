@@ -372,19 +372,19 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
     printf("National Event Card\n%s\n", cards[card]);
 
     switch (card) {
-        case 0: /* Tourism Hype: hotels earn double rent, 5 rounds */
+        case 0: // Tourism Hype
             players[currentPlayer].eventCard = 0;
             players[currentPlayer].eventCardRounds = 5;
             printf("Hotels earn double rent for %s, for 5 rounds.\n", players[currentPlayer].name);
             break;
 
-        case 1: /* Fuel Shortage: railway rent doubles, 5 rounds */
+        case 1: // Fuel Shortage
             players[currentPlayer].eventCard = 1;
             players[currentPlayer].eventCardRounds = 5;
             printf("Railway rent doubles for %s, for 5 rounds.\n", players[currentPlayer].name);
             break;
 
-        case 2: /* Heavy Floods: random coastal (Yellow group) property damaged */
+        case 2: //Heavy Floods
         {
             int candidates[28], n = 0, i;
             for (i = 0; i < 28; i++) {
@@ -408,7 +408,7 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 3: /* Political Rally: one random property closed for 2 rounds */
+        case 3: // Political Rally
         {
             int candidates[28], n = 0, i;
             for (i = 0; i < 28; i++) {
@@ -422,7 +422,7 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 4: /* Stock Market Rise: all property values +10% */
+        case 4: // Stock Market Rise
         {
             int i;
             for (i = 0; i < 28; i++) properties[i].permPurchasePrice = properties[i].permPurchasePrice * 110 / 100;
@@ -430,7 +430,7 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 5: /* Economic Downturn: property values -15% */
+        case 5: // Economic Downturn
         {
             int i;
             for (i = 0; i < 28; i++) properties[i].permPurchasePrice = properties[i].permPurchasePrice * 85 / 100;
@@ -438,7 +438,7 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 6: /* Housing Subsidy: house cost -30% */
+        case 6: //Housing Subsidy
         {
             int i;
             for (i = 0; i < 28; i++) properties[i].houseCost = properties[i].houseCost * 70 / 100;
@@ -446,19 +446,19 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 7: /* Interest Rate Cut: this player's future loans get -2%, 15 rounds */
+        case 7: // Interest Rate Cut
             players[currentPlayer].eventCard = 7;
             players[currentPlayer].eventCardRounds = 15;
             printf("%s's future loan interest reduced by 2%%.\n", players[currentPlayer].name);
             break;
 
-        case 8: /* Interest Rate Increase: this player's future loans get +2%, 15 rounds */
+        case 8: // Interest Rate Increase
             players[currentPlayer].eventCard = 8;
             players[currentPlayer].eventCardRounds = 15;
             printf("%s's future loan interest increased by 2%%.\n", players[currentPlayer].name);
             break;
 
-        case 9: /* Tax Amnesty: everyone +2000 */
+        case 9: // Tax Amnesty
         {
             int i;
             for (i = 0; i < 4; i++) if (!players[i].bankrupt) players[i].cash += 2000;
@@ -466,12 +466,12 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 10: /* Power Failure: utility income halved, system-wide, 3 rounds */
+        case 10: // Power Failure
             *powerFailureRounds = 3;
             printf("Utility income halved for 3 rounds.\n");
             break;
 
-        case 11: /* Foreign Funding: commercial (Green) property values +15% */
+        case 11: // Foreign Funding
         {
             int i;
             for (i = 0; i < 28; i++)
@@ -480,7 +480,7 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 12: /* Port Expansion: railway station values +20% */
+        case 12: // Port Expansion
         {
             int i;
             for (i = 0; i < 28; i++)
@@ -489,24 +489,24 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 13: /* Festival Season: hotels get +50% rent, this player, 15 rounds */
+        case 13: // Festival Season
             players[currentPlayer].eventCard = 13;
             players[currentPlayer].eventCardRounds = 15;
             printf("%s's hotels receive 50%% additional rent for 15 rounds.\n", players[currentPlayer].name);
             break;
 
-        case 14: /* Labour Strike: construction suspended, system-wide, 2 rounds */
+        case 14: // Labour Strike
             *labourStrikeRounds = 2;
             printf("Construction suspended for 2 rounds.\n");
             break;
 
-        case 15: /* Insurance Discount: this player's premiums -20%, 15 rounds */
+        case 15: // Insurance Discount
             players[currentPlayer].eventCard = 15;
             players[currentPlayer].eventCardRounds = 15;
             printf("%s's insurance premiums reduced by 20%% for 15 rounds.\n", players[currentPlayer].name);
             break;
 
-        case 16: /* Property Revaluation: random group +15% */
+        case 16: // Property Revaluation
         {
             int g = rand() % 8, i;
             for (i = 0; i < 28; i++)
@@ -515,7 +515,7 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 17: /* Currency Depreciation: construction costs +10% */
+        case 17: // Currency Depreciation
         {
             int i;
             for (i = 0; i < 28; i++) properties[i].houseCost = properties[i].houseCost * 110 / 100;
@@ -523,7 +523,7 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 18: /* Government Grant: random player +5000 */
+        case 18: // Government Grant
         {
             int i = rand() % 4;
             if (!players[i].bankrupt) {
@@ -533,7 +533,7 @@ void drawNationalEventCard(int currentPlayer, Player players[], Property propert
             break;
         }
 
-        case 19: /* National Disaster: random developed property damaged, any owner */
+        case 19: // National Disaster
         {
             int candidates[28], n = 0, i;
             for (i = 0; i < 28; i++) {

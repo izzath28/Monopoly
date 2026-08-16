@@ -50,7 +50,7 @@ typedef struct{
     int permPurchasePrice;
     int permBaseRent;
     int permMortgageValue;
-    int closedRoundsLeft;  // Political Rally: 0 = open, >0 = collecting no rent
+    int closedRoundsLeft;  
     int buildingCondition;
     int roundsSinceMaintenance;
     int structuralDamage;
